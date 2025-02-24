@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600">
+    <!-- Purple and Black Gradient Background -->
+    <defs>
+        <linearGradient id="backgroundGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#2D0845;stop-opacity:1" />
+            <stop offset="50%" style="stop-color:#130B26;stop-opacity:1" />
+            <stop offset="100%" style="stop-color:#000000;stop-opacity:1" />
+        </linearGradient>
+
+        <!-- Glow Effect -->
+        <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur" />
+            <feComposite in="SourceGraphic" in2="blur" operator="over" />
+        </filter>
+
+        <!-- Code Pattern -->
+        <pattern id="codePattern" patternUnits="userSpaceOnUse" width="200" height="200">
+            <rect width="200" height="200" fill="#0D1117" />
+            <text x="10" y="15" fill="#6E7681" font-family="monospace" font-size="10">import React from 'react';</text>
+            <text x="10" y="30" fill="#6E7681" font-family="monospace" font-size="10">import { useState } from 'react';</text>
+            <text x="10" y="45" fill="#7EE787" font-family="monospace" font-size="10">function Component() {</text>
+            <text x="20" y="60" fill="#FF7B72" font-family="monospace" font-size="10">const [state, setState] = useState(0);</text>
+            <text x="20" y="75" fill="#79C0FF" font-family="monospace" font-size="10">const handleClick = () => {</text>
+            <text x="30" y="90" fill="#D2A8FF" font-family="monospace" font-size="10">setState(state + 1);</text>
+            <text x="20" y="105" fill="#79C0FF" font-family="monospace" font-size="10">};</text>
+            <text x="20" y="120" fill="#C9D1D9" font-family="monospace" font-size="10">return (</text>
+            <text x="30" y="135" fill="#A5D6FF" font-family="monospace" font-size="10">&lt;div className="container"&gt;</text>
+            <text x="40" y="150" fill="#A5D6FF" font-family="monospace" font-size="10">&lt;h1&gt;Counter: {state}&lt;/h1&gt;</text>
+            <text x="40" y="165" fill="#A5D6FF" font-family="monospace" font-size="10">&lt;button onClick={handleClick}&gt;</text>
+            <text x="50" y="180" fill="#C9D1D9" font-family="monospace" font-size="10">Increment</text>
+            <text x="40" y="195" fill="#A5D6FF" font-family="monospace" font-size="10">&lt;/button&gt;</text>
+        </pattern>
+    </defs>
+
+    <!-- Background -->
+    <rect width="800" height="600" fill="url(#backgroundGradient)" />
+
+    <!-- Purple Glow Spots -->
+    <circle cx="200" cy="450" r="100" fill="#6600CC" opacity="0.15" filter="url(#glow)" />
+    <circle cx="600" cy="150" r="120" fill="#9900FF" opacity="0.15" filter="url(#glow)" />
+
+    <!-- Laptop Base -->
+    <path d="M 200,450 L 600,450 L 630,500 L 170,500 Z" fill="#111111" />
+
+    <!-- Laptop Keyboard Area -->
+    <rect x="210" y="350" width="380" height="95" rx="5" fill="#0A0A0A" />
+
+    <!-- Laptop Touchpad -->
+    <rect x="330" y="400" width="140" height="35" rx="5" fill="#1A1A1A" />
+
+    <!-- Laptop Screen Outer -->
+    <rect x="220" y="170" width="360" height="220" rx="5" fill="#0A0A0A" />
+
+    <!-- Laptop Screen Inner (Code Pattern) -->
+    <rect x="230" y="180" width="340" height="200" fill="url(#codePattern)" />
+
+    <!-- Laptop Hinge -->
+    <rect x="370" y="350" width="60" height="5" fill="#1A1A1A" />
+
+    <!-- Laptop Webcam -->
+    <circle cx="400" cy="190" r="3" fill="#333333" />
+
+    <!-- Screen Reflections -->
+    <path d="M 235,185 L 250,185 L 240,205 L 235,205 Z" fill="white" opacity="0.05" />
+    <path d="M 520,185 L 565,185 L 535,235 L 515,235 Z" fill="white" opacity="0.03" />
+</svg>
