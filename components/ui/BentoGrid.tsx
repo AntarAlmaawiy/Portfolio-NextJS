@@ -7,6 +7,7 @@ import animationData from '@/data/confetti.json';
 import Lottie from "react-lottie";
 import MagicButton from "@/components/ui/MagicButton";
 import { IoCopyOutline } from "react-icons/io5";
+import Image from "next/image"; // Add this import
 
 export const BentoGrid = ({
                               className,
@@ -72,18 +73,31 @@ export const BentoGridItem = ({
             <div className={`${id === 6 && 'flex flex-col items-center'} h-full`}>
                 <div className="w-full h-full absolute">
                     {img && (
-                        <img
+                        <Image
                             src={img}
                             alt={img}
-                            className={cn(imgClassName,'object-cover, object-center')}
+                            className={cn(imgClassName, 'object-cover object-center')}
+                            fill // Use fill layout instead of setting specific dimensions
+                            sizes="(max-width: 768px) 100vw, 50vw" // Responsive sizing hint
+                            style={{
+                                objectFit: 'cover', // Make sure this style is applied directly
+                                objectPosition: 'center'
+                            }}
                         />
                     )}
                 </div>
                 <div className={`absolute right-0 -bottom-5 ${id === 5 && 'w-full opacity-80'}`}>
                     {spareImg && (
-                        <img src={spareImg}
-                             alt={spareImg}
-                             className={'object-cover object-center w-full h-full'}
+                        <Image
+                            src={spareImg}
+                            alt={spareImg}
+                            className={'object-cover object-center w-full h-full'}
+                            width={300}
+                            height={300}
+                            style={{
+                                objectFit: 'cover',
+                                objectPosition: 'center'
+                            }}
                         />
                     )}
                 </div>

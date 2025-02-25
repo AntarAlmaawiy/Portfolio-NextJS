@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import {projects} from "@/data";
 import {PinContainer} from "@/components/ui/3d-pin";
 import {FaLocationArrow} from "react-icons/fa";
@@ -19,10 +19,12 @@ const RecentProjects = () => {
                              overflow-hidden sm:h-[40vh] h-[30vh] lg:h-[30vh] mb-10">
                                 {/* Background with conditional display for larger screens */}
                                 <div className="relative w-full h-full overflow-hidden lg:rounded-3xl bg-[#13162d]">
+                                    {/* eslint-disable-next-line @next/next/no-img-element */}
                                     <img src="/Ai.png" alt="bg-img" className="hidden sm:block" />
                                 </div>
 
                                 {/* Main project image - conditionally positioned for different screen sizes */}
+                                {/* eslint-disable-next-line @next/next/no-img-element */}
                                 <img
                                     src={img}
                                     alt={title}
@@ -40,17 +42,18 @@ const RecentProjects = () => {
                                 {des}
                             </p>
                             <div className="flex item-center justify-between mt-7 mb-3">
-                                <div className=" flex items-center">
+                                <div className="flex items-center">
                                     {iconLists.map((icon, index) => (
                                         <div key={icon} className='border border-white/[0.2] rounded-full bg-black
                                         lg:w-10 lg:h-10 w-8 h-8 flex justify-center items-center'
                                              style={{ transform: `translateX(-${5 * index * 2}px)`}}>
+                                            {/* eslint-disable-next-line @next/next/no-img-element */}
                                             <img src={icon} alt={icon} className="p-2" />
                                         </div>
                                     ))}
                                 </div>
 
-                                <div className=" flex justify-center items-center">
+                                <div className="flex justify-center items-center">
                                     <p className="flex lg:text-xl md:text-xs text-sm text-purple">Check Live Site</p>
                                     <FaLocationArrow className="ms-3" color="#CBACF9" />
                                 </div>
@@ -59,8 +62,8 @@ const RecentProjects = () => {
                     </div>
                 ))}
             </div>
-
         </div>
-    )
-}
-export default RecentProjects
+    );
+};
+
+export default RecentProjects;
