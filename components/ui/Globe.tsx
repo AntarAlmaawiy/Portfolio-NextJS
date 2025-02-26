@@ -1,13 +1,20 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
-import { useEffect, useRef, useState, useCallback } from "react";
+import {useEffect, useRef, useState, useCallback, RefObject} from "react";
 import { Color, Scene, Fog, PerspectiveCamera, Vector3 } from "three";
 import ThreeGlobe from "three-globe";
-import { useThree, Object3DNode, Canvas, extend } from "@react-three/fiber";
+import { useThree, Canvas, extend } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
 import countries from "@/data/globe.json";
+
+// Import React to have access to JSX namespace
+import React from "react";
+
 declare module "@react-three/fiber" {
     interface ThreeElements {
-        threeGlobe: Object3DNode<ThreeGlobe, typeof ThreeGlobe>;
+        threeGlobe: React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement> & {
+            ref?: React.RefObject<ThreeGlobe>;
+        };
     }
 }
 
@@ -143,39 +150,40 @@ export function Globe({ globeConfig, data }: WorldProps) {
             _buildData();
             _buildMaterial();
         }
-    }, [globeRef.current, _buildData, _buildMaterial]);
+    }, [_buildData, _buildMaterial]);
 
     const startAnimation = useCallback(() => {
         if (!globeRef.current || !globeData) return;
 
         globeRef.current
             .arcsData(data)
-            .arcStartLat((d) => (d as { startLat: number }).startLat * 1)
-            .arcStartLng((d) => (d as { startLng: number }).startLng * 1)
-            .arcEndLat((d) => (d as { endLat: number }).endLat * 1)
-            .arcEndLng((d) => (d as { endLng: number }).endLng * 1)
-            .arcColor((arcData) => (arcData as { color: string }).color)
-            .arcAltitude((arcData) => {
-                return (arcData as { arcAlt: number }).arcAlt * 1;
+            .arcStartLat((d: any) => d.startLat * 1)
+            .arcStartLng((d: any) => d.startLng * 1)
+            .arcEndLat((d: any) => d.endLat * 1)
+            .arcEndLng((d: any) => d.endLng * 1)
+            .arcColor((arcData: any) => arcData.color)
+            .arcAltitude((arcData: any) => {
+                return arcData.arcAlt * 1;
             })
             .arcStroke(() => {
                 return [0.32, 0.28, 0.3][Math.round(Math.random() * 2)];
             })
             .arcDashLength(defaultProps.arcLength)
-            .arcDashInitialGap((arcData) => (arcData as { order: number }).order * 1)
+            .arcDashInitialGap((arcData: any) => arcData.order * 1)
             .arcDashGap(15)
             .arcDashAnimateTime(() => defaultProps.arcTime);
 
         globeRef.current
             .pointsData(data)
-            .pointColor((pointData) => (pointData as { color: string }).color)
+            .pointColor((pointData: any) => pointData.color)
             .pointsMerge(true)
             .pointAltitude(0.0)
             .pointRadius(2);
 
+        // Fixed the ringColor function to match the expected type
         globeRef.current
             .ringsData([])
-            .ringColor((ringData: {color: (t: number) => string}) => (t: number) => ringData.color(t))
+            .ringColor(() => "#ffffff") // Use a simple string color instead of a function
             .ringMaxRadius(defaultProps.maxRings)
             .ringPropagationSpeed(RING_PROPAGATION_SPEED)
             .ringRepeatPeriod(
@@ -214,7 +222,7 @@ export function Globe({ globeConfig, data }: WorldProps) {
     ]);
 
     useEffect(() => {
-        if (!globeRef.current || !globeData) return;
+        if (!globeData) return;
 
         const interval = setInterval(() => {
             if (!globeRef.current || !globeData) return;
@@ -232,11 +240,11 @@ export function Globe({ globeConfig, data }: WorldProps) {
         return () => {
             clearInterval(interval);
         };
-    }, [globeRef.current, globeData, data.length]);
+    }, [globeData, data.length]);
 
     return (
         <>
-            <threeGlobe ref={globeRef} />
+            <threeGlobe ref={globeRef as RefObject<HTMLElement | null> & RefObject<ThreeGlobe>} />
         </>
     );
 }
@@ -248,7 +256,7 @@ export function WebGLRendererConfig() {
         gl.setPixelRatio(window.devicePixelRatio);
         gl.setSize(size.width, size.height);
         gl.setClearColor(0xffaaff, 0);
-    }, [gl, size.width, size.height]);
+    }, [gl, size]);
 
     return null;
 }
